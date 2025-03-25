@@ -23,4 +23,4 @@ Version 1.0.2
 * Added CustomUserDetailsService class to loadUsername from repository(database)
 * @Override
   public **UserDetails** **loadUserByUsername(String username)** throws UsernameNotFoundException
-* returns User(String username, String credentials, List<GrantedAuthority> authorities)
+* returns User(String username, String credentials, List < GrantedAuthority > authorities)
