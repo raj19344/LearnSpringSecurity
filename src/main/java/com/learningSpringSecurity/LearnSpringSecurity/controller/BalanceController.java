@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class WelcomeController {
+public class BalanceController {
 
-    @GetMapping("/welcome")
-    public String getWelcome(){
-        return "Welcome page for all";
+    @GetMapping("/balance")
+    public String getBalance(){
+        return "Display balance page";
     }
 }
