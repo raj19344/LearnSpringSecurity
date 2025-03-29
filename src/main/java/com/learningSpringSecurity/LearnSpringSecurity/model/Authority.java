@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @Entity
 @Getter @Setter
 @Table(name = "authorities")
@@ -14,7 +16,15 @@ public class Authority {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name="customer_id")
-    private Customer customer;
+    public Authority(){}
+
+
+    public Authority(String name) {
+        this.name = name;
+    }
+
+    public Authority(Long id) {
+        this.id = id;
+    }
+
 }
