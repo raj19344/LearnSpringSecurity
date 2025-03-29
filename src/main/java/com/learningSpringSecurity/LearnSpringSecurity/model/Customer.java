@@ -8,8 +8,7 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
-
+@Getter @Setter
 public class Customer {
 
     @Id
@@ -19,10 +18,30 @@ public class Customer {
 
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private Set<Authority> authorities;
+    @OneToOne
+    @JoinColumn(name = "role", referencedColumnName = "id")
+    private Authority authority;
+
+    public Customer(){}
+
+    public Customer(Long id, String email, String password, Authority authority) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.authority = authority;
+    }
+
+    public Customer(String email, String password, Authority authority) {
+        this.email = email;
+        this.password = password;
+        this.authority = authority;
+    }
+
+    public Customer(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -23,17 +23,14 @@ import java.util.stream.Collectors;
 
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 
-
+    public static String secretKey="fjdsghjsfhgduyfvbfdhgakdfbdyladsdjkfdsbkfjsh";
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(Objects.nonNull(authentication)){
-            Environment env =getEnvironment();
-                if(Objects.nonNull(env)){
-                    String secret = env.getProperty("JWT_SECRET","jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4");
 
-                    SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+                    SecretKey secretKey1 = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
                     String jwt = Jwts.builder()
                             .issuer("Preetish")
                             .subject("JWT Token")
@@ -42,15 +39,15 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                             GrantedAuthority::getAuthority).collect(Collectors.joining("-1")))
                             .issuedAt(new Date())
                             .expiration(new Date((new Date().getTime()) + 30000000))
-                            .signWith(secretKey).compact();
+                            .signWith(secretKey1).compact();
 
                     response.setHeader("Authorization",jwt);
                 }
-        }
         filterChain.doFilter(request,response);
     }
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getServletPath().equals("/account");
+        return !request.getServletPath().equals("/apiLogin");
     }
 }
