@@ -35,6 +35,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/welcome").permitAll()
                 .requestMatchers("/user").permitAll()
+                .requestMatchers("/apiLogin").permitAll()
                 .requestMatchers("/accounts").hasAuthority("USER")
                 .requestMatchers("/balances").hasAuthority("ADMIN")
                 .anyRequest().authenticated());

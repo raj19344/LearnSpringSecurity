@@ -8,7 +8,6 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
 public class Customer {
 
     @Id
@@ -23,6 +22,38 @@ public class Customer {
     @OneToOne
     @JoinColumn(name = "role", referencedColumnName = "id")
     private Authority authority;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
 
     public Customer(){}
 
@@ -44,4 +75,6 @@ public class Customer {
         this.email = email;
         this.password = password;
     }
+
+
 }
