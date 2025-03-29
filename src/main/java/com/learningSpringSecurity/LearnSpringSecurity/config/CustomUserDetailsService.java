@@ -4,6 +4,7 @@ import com.learningSpringSecurity.LearnSpringSecurity.model.Authority;
 import com.learningSpringSecurity.LearnSpringSecurity.model.Customer;
 import com.learningSpringSecurity.LearnSpringSecurity.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,14 +21,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final CustomerRepository customerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findByEmail(username).orElseThrow(()->new UsernameNotFoundException("User not found with the given mail id"));
 
+        System.out.println("In UserDetailService class");
+        Customer customer = customerRepository.findByEmail(username).orElseThrow(()->new
+                UsernameNotFoundException("User not found with the given mail id"));
 
 
 //        List<GrantedAuthority>authorities = new ArrayList<>();
@@ -37,7 +41,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 //            authorities.add(simpleGrantedAuthority);
 //        }
 
-        List<GrantedAuthority> authorities =customer.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName())).collect(Collectors.toList());
+        List<GrantedAuthority> authorities =List.of(customer.getAuthority()).stream().map(authority ->
+                new SimpleGrantedAuthority(authority.getName())).collect(Collectors.toList());
 
         return new User(customer.getEmail(), customer.getPassword(), authorities);
     }
